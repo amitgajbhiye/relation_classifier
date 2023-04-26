@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 from packaging import version
+from relbert import RelBERT
 
 import config
 from sklearn.linear_model import LogisticRegression
@@ -9,7 +10,6 @@ if version.parse(str(sys.version_info[0]) + '.' + str(sys.version_info[1])) < ve
     import pickle5 as pickle
 else:
     import pickle
-
 
 class Classifier:
     def __init__(self):
@@ -37,4 +37,12 @@ class Classifier:
 
 
 if __name__ == '__main__':
-    pass
+    classifier = Classifier()
+    classifier.load_model()
+
+    model = RelBERT('relbert/relbert-roberta-large')
+    embeddings = model.get_embedding([['banana', 'fruit'], ['banana', 'yellow'], ['banana', 'thinking'],
+                                      ['banana', 'red']])
+    importance = classifier.importance(embeddings)
+
+    print(importance)
