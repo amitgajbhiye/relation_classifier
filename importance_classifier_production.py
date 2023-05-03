@@ -57,10 +57,16 @@ if __name__ == "__main__":
     classifier = Classifier()
     classifier.load_model()
 
-    model = RelBERT("relbert/relbert-roberta-large")
-    embeddings = model.get_embedding(con_sim_list)
+    model = RelBERT(
+        "relbert/relbert-roberta-large",
+    )
+    embeddings = model.get_embedding(con_sim_list, batch_size=32)
 
     importance = classifier.importance(embeddings)
 
     print(type(importance))
     print(importance, flush=True)
+
+    with open("relation_probs.txt", "w") as out_file:
+        for (con1, con2), score in zip(con_sim_list, importance):
+            out_file.write(f"{con1} &&& {con2} &&& {round(score, 4)}")
