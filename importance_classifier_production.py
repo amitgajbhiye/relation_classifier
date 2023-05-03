@@ -69,4 +69,5 @@ if __name__ == "__main__":
 
     with open("relation_probs.txt", "w") as out_file:
         for (con1, con2), score in zip(con_sim_list, importance):
+            print((f"{con1} &&& {con2} &&& {round(score, 4)}"), flush=True)
             out_file.write(f"{con1} &&& {con2} &&& {round(score, 4)}")
