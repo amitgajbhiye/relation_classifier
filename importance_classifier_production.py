@@ -6,17 +6,20 @@ from relbert import RelBERT
 import config
 from sklearn.linear_model import LogisticRegression
 
-if version.parse(str(sys.version_info[0]) + '.' + str(sys.version_info[1])) < version.parse('3.9'):
+if version.parse(
+    str(sys.version_info[0]) + "." + str(sys.version_info[1])
+) < version.parse("3.9"):
     import pickle5 as pickle
 else:
     import pickle
+
 
 class Classifier:
     def __init__(self):
         self.model = LogisticRegression(max_iter=1000, random_state=42, verbose=1)
 
     def load_model(self):
-        with open(config.classifier_model_path, 'rb') as f:
+        with open(config.classifier_model_path, "rb") as f:
             self.model = pickle.load(f)
 
     def importance1(self, data):
@@ -36,13 +39,28 @@ class Classifier:
         return importance
 
 
-if __name__ == '__main__':
+def read_data(file_path):
+    with open(file_path, "r") as in_file:
+        lines = in_file.read().splitlines()
+
+    return lines
+
+
+# file = "sorted_counts_numberbatch_con_similarsim_thresh_50_count_thresh_60_12.txt"
+file = "temp.txt"
+
+con_sim_list = read_data(file_path=file)
+
+con_sim_list = [t.split("\t") for t in con_sim_list]
+
+if __name__ == "__main__":
     classifier = Classifier()
     classifier.load_model()
 
-    model = RelBERT('relbert/relbert-roberta-large')
-    embeddings = model.get_embedding([['banana', 'fruit'], ['banana', 'yellow'], ['banana', 'thinking'],
-                                      ['banana', 'red']])
+    model = RelBERT("relbert/relbert-roberta-large")
+    embeddings = model.get_embedding(con_sim_list)
+
     importance = classifier.importance(embeddings)
 
-    print(importance)
+    print(type(importance))
+    print(importance, flush=True)

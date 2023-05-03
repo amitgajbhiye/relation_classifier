@@ -1,0 +1,100 @@
+compact car	###z coupe
+sedan	###z coupe
+funny car	###z coupe
+freight car	###z coupe
+auto shop	###z coupe
+automaker	###z coupe
+car battery	###z coupe
+auto racing	###z coupe
+safety car	###z coupe
+drive train	###z coupe
+hybrid vehicle	###z coupe
+squad car	###z coupe
+stock car	###z coupe
+truck	###z coupe
+motorcycle	###z coupe
+motor car	###z coupe
+passenger car	###z coupe
+hydrogen car	###z coupe
+manual transmission	###z coupe
+rocket car	###z coupe
+rail vehicle	###z coupe
+motor	###z coupe
+station wagon	###z coupe
+drag racing	###z coupe
+electric car	###z coupe
+auto	###z coupe
+engine trouble	###z coupe
+diesel engine	###z coupe
+motorist	###z coupe
+pickup truck	###z coupe
+estate car	###z coupe
+body shop	###z coupe
+railroad car	###z coupe
+town car	###z coupe
+engine	###z coupe
+driving	###z coupe
+wagon	###z coupe
+fiat	###z coupe
+police car	###z coupe
+touring car	###z coupe
+racing car	###z coupe
+ford	###z coupe
+vehicle	###z coupe
+monster truck	###z coupe
+production model	###z coupe
+motor racing	###z coupe
+hot rod	###z coupe
+muscle car	###z coupe
+car	###z coupe
+race car	###z coupe
+road car	###z coupe
+stick shift	###z coupe
+economy car	###z coupe
+automobile	###z coupe
+hybrid car	###z coupe
+automatic transmission	###z coupe
+street racing	###z coupe
+test drive	###z coupe
+motor vehicle	###z coupe
+jeep	###z coupe
+motor home	###z coupe
+penalty goal	## yard box
+rugby football	## yard box
+transfer window	## yard box
+soccer field	## yard box
+centre half	## yard box
+zone defense	## yard box
+rugby union	## yard box
+field house	## yard box
+line judge	## yard box
+basketball court	## yard box
+contact sport	## yard box
+goal area	## yard box
+defensive midfielder	## yard box
+spot kick	## yard box
+basketball player	## yard box
+corner flag	## yard box
+injury time	## yard box
+football	## yard box
+beach soccer	## yard box
+corner kick	## yard box
+basketball	## yard box
+roller hockey	## yard box
+game point	## yard box
+volleyball	## yard box
+football player	## yard box
+video referee	## yard box
+rugby league	## yard box
+flag football	## yard box
+association football	## yard box
+footballer	## yard box
+soccer player	## yard box
+ice hockey	## yard box
+penalty kick	## yard box
+water polo	## yard box
+tennis ball	## yard box
+snap shot	## yard box
+street hockey	## yard box
+game	## yard box
+rugby	## yard box
