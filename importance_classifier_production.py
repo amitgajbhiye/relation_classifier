@@ -50,11 +50,11 @@ def read_data(file_path):
 # Numberbatch
 # file = "sorted_counts_numberbatch_con_similarsim_thresh_50_count_thresh_60_12.txt"
 
-# Fasttext
-# file = "sorted_counts_fasttext_con_similarsim_thresh_50_count_thresh_60_12.txt"
-
 # Word2vec
-file = "sorted_counts_word2vec_con_similarsim_thresh_50_count_thresh_10_12.txt"
+# file = "sorted_counts_word2vec_con_similarsim_thresh_50_count_thresh_10_12.txt"
+
+# Fasttext
+file = "sorted_counts_fasttext_con_similarsim_thresh_50_count_thresh_60_12.txt"
 
 con_sim_list = read_data(file_path=file)
 
@@ -67,14 +67,14 @@ if __name__ == "__main__":
     model = RelBERT(
         "relbert/relbert-roberta-large",
     )
-    embeddings = model.get_embedding(con_sim_list, batch_size=512)
+    embeddings = model.get_embedding(con_sim_list, batch_size=1024)
 
     importance = classifier.importance(embeddings)
 
     # print(type(importance))
     # print(importance, flush=True)
 
-    with open("word2vec_relation_probs.txt", "w") as out_file:
+    with open("fasttext_relation_probs.txt", "w") as out_file:
         for (con1, con2), score in zip(con_sim_list, importance):
             print((f"{con1} &&& {con2} &&& {round(score, 4)}"), flush=True)
             print(flush=True)
