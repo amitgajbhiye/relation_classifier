@@ -51,7 +51,10 @@ def read_data(file_path):
 # file = "sorted_counts_numberbatch_con_similarsim_thresh_50_count_thresh_60_12.txt"
 
 # Fasttext
-file = "sorted_counts_fasttext_con_similarsim_thresh_50_count_thresh_60_12.txt"
+# file = "sorted_counts_fasttext_con_similarsim_thresh_50_count_thresh_60_12.txt"
+
+# Word2vec
+file = "sorted_counts_word2vec_con_similarsim_thresh_50_count_thresh_10_12.txt"
 
 con_sim_list = read_data(file_path=file)
 
@@ -71,7 +74,7 @@ if __name__ == "__main__":
     # print(type(importance))
     # print(importance, flush=True)
 
-    with open("numberbatch_relation_probs.txt", "w") as out_file:
+    with open("word2vec_relation_probs.txt", "w") as out_file:
         for (con1, con2), score in zip(con_sim_list, importance):
             print((f"{con1} &&& {con2} &&& {round(score, 4)}"), flush=True)
             print(flush=True)
