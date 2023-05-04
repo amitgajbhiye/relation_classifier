@@ -46,8 +46,12 @@ def read_data(file_path):
     return lines
 
 
-file = "sorted_counts_numberbatch_con_similarsim_thresh_50_count_thresh_60_12.txt"
 # file = "temp.txt"
+# Numberbatch
+# file = "sorted_counts_numberbatch_con_similarsim_thresh_50_count_thresh_60_12.txt"
+
+# Fasttext
+file = "sorted_counts_fasttext_con_similarsim_thresh_50_count_thresh_60_12.txt"
 
 con_sim_list = read_data(file_path=file)
 
