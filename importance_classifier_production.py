@@ -71,7 +71,7 @@ if __name__ == "__main__":
 
     print(flush=True)
     print(f"input_fle: {inp_file}", flush=True)
-    print(f"output_file: {out_file}", file=True)
+    print(f"output_file: {out_file}", flush=True)
 
     con_sim_list = read_data(file_path=inp_file)
     con_sim_list = [t.split("\t") for t in con_sim_list][0:200]
