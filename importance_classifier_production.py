@@ -47,8 +47,8 @@ def read_data(file_path):
 
 
 # Word2vec
-file = "datasets/rel_inp_word2vec_ueft_label_similar_0.5thresh_count_10thresh.txt"
-out_file = "output_files/w2v_relation_probs.txt"
+# file = "datasets/rel_inp_word2vec_ueft_label_similar_0.5thresh_count_10thresh.txt"
+# out_file = "output_files/w2v_relation_probs.txt"
 
 
 # Numberbatch
@@ -68,8 +68,15 @@ if __name__ == "__main__":
     # Reading Commandline arguments
     inp_file, out_file = sys.argv
 
+    print(flush=True)
+    print(f"input_fle: {inp_file}", flush=True)
+    print(f"output_file: {out_file}", file=True)
+
     con_sim_list = read_data(file_path=inp_file)
-    con_sim_list = [t.split("\t") for t in con_sim_list]
+    con_sim_list = [t.split("\t") for t in con_sim_list][0:200]
+
+    print(f"record_num_inp_file : {len(con_sim_list)}")
+    print(flush=True)
 
     classifier = Classifier()
     classifier.load_model()
