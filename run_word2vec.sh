@@ -18,6 +18,6 @@
 
 conda activate relbert
 
-python3 importance_classifier_production.py
+python3 importance_classifier_production.py "datasets/rel_inp_word2vec_ueft_label_similar_0.5thresh_count_10thresh.txt" "output_files/w2v_relation_probs.txt"
 
 echo 'Job Finished !!!'

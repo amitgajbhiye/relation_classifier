@@ -46,35 +46,45 @@ def read_data(file_path):
     return lines
 
 
-# file = "temp.txt"
-# Numberbatch
-# file = "sorted_counts_numberbatch_con_similarsim_thresh_50_count_thresh_60_12.txt"
-
 # Word2vec
-# file = "sorted_counts_word2vec_con_similarsim_thresh_50_count_thresh_10_12.txt"
+file = "datasets/rel_inp_word2vec_ueft_label_similar_0.5thresh_count_10thresh.txt"
+out_file = "output_files/w2v_relation_probs.txt"
+
+
+# Numberbatch
+# file = "datasets/rel_inp_numberbatch_ueft_label_similar_0.5thresh_count_20thresh.txt"
+# out_file = "output_files/numberbatch_relation_probs.txt"
+
 
 # Fasttext
-file = "sorted_counts_fasttext_con_similarsim_thresh_50_count_thresh_60_12.txt"
+# file = "datasets/rel_inp_fasttext_ueft_label_similar_0.5thresh_count_100thresh.txt"
+# out_file = "output_files/fasttext_relation_probs.txt"
 
-con_sim_list = read_data(file_path=file)
 
-con_sim_list = [t.split("\t") for t in con_sim_list]
+# Input Concepts
+
 
 if __name__ == "__main__":
+    # Reading Commandline arguments
+    inp_file, out_file = sys.argv
+
+    con_sim_list = read_data(file_path=inp_file)
+    con_sim_list = [t.split("\t") for t in con_sim_list]
+
     classifier = Classifier()
     classifier.load_model()
 
     model = RelBERT(
         "relbert/relbert-roberta-large",
     )
-    embeddings = model.get_embedding(con_sim_list, batch_size=1024)
+    embeddings = model.get_embedding(con_sim_list, batch_size=2048)
 
     importance = classifier.importance(embeddings)
 
     # print(type(importance))
     # print(importance, flush=True)
 
-    with open("fasttext_relation_probs.txt", "w") as out_file:
+    with open(out_file, "w") as out_file:
         for (con1, con2), score in zip(con_sim_list, importance):
             print((f"{con1} &&& {con2} &&& {round(score, 4)}"), flush=True)
             print(flush=True)
