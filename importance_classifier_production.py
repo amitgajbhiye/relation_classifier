@@ -61,20 +61,18 @@ def read_data(file_path):
 # out_file = "output_files/fasttext_relation_probs.txt"
 
 
-# Input Concepts
-
-
 if __name__ == "__main__":
     # Reading Commandline arguments
-    print(sys.argv, flush=True)
+    print(f"Input Arguments : {sys.argv}", flush=True)
     _, inp_file, out_file = sys.argv
 
     print(flush=True)
     print(f"input_fle: {inp_file}", flush=True)
     print(f"output_file: {out_file}", flush=True)
 
+    # Input Concepts Similar Data
     con_sim_list = read_data(file_path=inp_file)
-    con_sim_list = [t.split("\t") for t in con_sim_list][0:200]
+    con_sim_list = [t.split("\t") for t in con_sim_list]
 
     print(f"record_num_inp_file : {len(con_sim_list)}")
     print(flush=True)
