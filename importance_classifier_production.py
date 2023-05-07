@@ -66,7 +66,8 @@ def read_data(file_path):
 
 if __name__ == "__main__":
     # Reading Commandline arguments
-    inp_file, out_file = sys.argv
+    print(sys.argv, flush=True)
+    _, inp_file, out_file = sys.argv
 
     print(flush=True)
     print(f"input_fle: {inp_file}", flush=True)
