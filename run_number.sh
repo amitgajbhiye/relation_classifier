@@ -16,10 +16,10 @@
 #SBATCH -t 0-01:00:00
 #SBATCH --gres=gpu:1
 
-module load CUDA/11.7
-
 
 conda activate relbert
+
+module load CUDA/11.7
 
 python3 importance_classifier_production.py "datasets/rel_inp_numberbatch_ueft_label_similar_0.5thresh_count_20thresh.txt" "output_files/numberbatch_relation_probs.txt"
 
