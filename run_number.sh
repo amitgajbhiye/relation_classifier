@@ -11,13 +11,14 @@
 
 #SBATCH -p gpu,gpu_v100
 #SBATCH --mem=10G
-#SBATCH --exclusive
+##SBATCH --exclusive
 
 #SBATCH -t 0-01:00:00
 #SBATCH --gres=gpu:1
 
+#conda activate relbert
 
-conda activate relbert
+source /scratch/c.scmag3/relation_classifier/venv_relbert/bin/activate
 
 module load CUDA/11.7
 
