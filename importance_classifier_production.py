@@ -3,8 +3,26 @@ import numpy as np
 from packaging import version
 from relbert import RelBERT
 
+import logging
+import os
+
 import config
 from sklearn.linear_model import LogisticRegression
+
+
+def initialization():
+    log_file = os.path.join(
+        "logs", os.path.splitext(os.path.basename(__file__))[0] + ".log"
+    )
+
+    logging.basicConfig(
+        format="%(levelname)s %(asctime)s: %(message)s",
+        datefmt="%m/%d/%Y %I:%M:%S %p",
+        filename=log_file,
+        filemode="w",
+        level=logging.INFO,
+    )
+
 
 if version.parse(
     str(sys.version_info[0]) + "." + str(sys.version_info[1])
@@ -62,6 +80,10 @@ def read_data(file_path):
 
 
 if __name__ == "__main__":
+    initialization()
+
+    logging.info("Hello!")
+
     # Reading Commandline arguments
     print(f"Input Arguments : {sys.argv}", flush=True)
     _, inp_file, out_file = sys.argv
