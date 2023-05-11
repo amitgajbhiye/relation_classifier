@@ -18,7 +18,7 @@
 
 #conda activate relbert
 
-source /scratch/c.scmag3/relation_classifier/venv_relbert/bin/activate
+source venv_relbert/bin/activate
 
 module load CUDA/11.7
 
