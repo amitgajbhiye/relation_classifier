@@ -10,13 +10,12 @@
 #SBATCH -A scw1858
 
 #SBATCH -p gpu,gpu_v100
-#SBATCH --mem=10G
-##SBATCH --exclusive
+#SBATCH --mem=64G
 
-#SBATCH -t 0-01:00:00
-#SBATCH --gres=gpu:1
 
-#conda activate relbert
+#SBATCH -t 2-00:00:00
+#SBATCH --gres=gpu:2
+
 
 source venv_relbert/bin/activate
 
