@@ -10,11 +10,11 @@
 #SBATCH -A scw1858
 
 #SBATCH -p gpu,gpu_v100
-#SBATCH --mem=15G
+#SBATCH --mem=100G
 
-#SBATCH -t 0-03:00:00
+#SBATCH -t 1-00:00:00
 
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:2
 
 source venv_relbert/bin/activate
 
