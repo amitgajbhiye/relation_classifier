@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
     # Input Concepts Similar Data
     con_sim_list = read_data(file_path=inp_file)
-    con_sim_list = [t.split("\t") for t in con_sim_list]
+    con_sim_list = [t.split("\t") for t in con_sim_list][0:2000]
 
     print(f"record_num_inp_file : {len(con_sim_list)}")
     print(flush=True)
@@ -105,13 +105,21 @@ if __name__ == "__main__":
     model = RelBERT(
         "relbert/relbert-roberta-large",
     )
-    embeddings = model.get_embedding(con_sim_list, batch_size=2048)
-    print(f"Finished getting RelBERT Embeddings : {len(embeddings)}", flush=True)
 
-    importance = classifier.importance(embeddings)
+    batch_size = 100
+    all_embeddings = []
+    for i in range(0, len(con_sim_list), batch_size):
+        con_sim_batch = con_sim_list[i : i + batch_size]
+        embeddings = model.get_embedding(con_sim_batch, batch_size=2048)
+        all_embeddings.extend(embeddings)
 
-    # print(type(importance))
-    # print(importance, flush=True)
+    print(f"Finished getting RelBERT Embeddings : {len(all_embeddings)}", flush=True)
+
+    assert len(con_sim_list) == len(
+        all_embeddings
+    ), f"len con_sim_list, {len(con_sim_list)} not equal to len all_embeddings, {len(all_embeddings)}"
+
+    importance = classifier.importance(all_embeddings)
 
     with open(out_file, "w") as out_file:
         for (con1, con2), score in zip(con_sim_list, importance):
