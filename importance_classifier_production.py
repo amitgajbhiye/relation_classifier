@@ -106,6 +106,7 @@ if __name__ == "__main__":
         "relbert/relbert-roberta-large",
     )
     embeddings = model.get_embedding(con_sim_list, batch_size=2048)
+    print(f"Finished getting RelBERT Embeddings : {len(embeddings)}", flush=True)
 
     importance = classifier.importance(embeddings)
 
