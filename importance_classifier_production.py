@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
     # Input Concepts Similar Data
     con_sim_list = read_data(file_path=inp_file)
-    con_sim_list = [t.split("\t") for t in con_sim_list][0:2000]
+    con_sim_list = [t.split("\t") for t in con_sim_list]
 
     print(f"record_num_inp_file : {len(con_sim_list)}")
     print(flush=True)
@@ -106,7 +106,7 @@ if __name__ == "__main__":
         "relbert/relbert-roberta-large",
     )
 
-    batch_size = 100
+    batch_size = 10000
     all_embeddings = []
     for i in range(0, len(con_sim_list), batch_size):
         con_sim_batch = con_sim_list[i : i + batch_size]
@@ -114,6 +114,9 @@ if __name__ == "__main__":
         all_embeddings.extend(embeddings)
 
     print(f"Finished getting RelBERT Embeddings : {len(all_embeddings)}", flush=True)
+
+    print(f"len_con_sim_list, {len(con_sim_list)}", flush=True)
+    print(f"len_all_embeddings, {len(all_embeddings)}", flush=True)
 
     assert len(con_sim_list) == len(
         all_embeddings
