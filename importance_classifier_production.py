@@ -120,19 +120,18 @@ if __name__ == "__main__":
 
             print(f"processing_batch : {batch_counter} / {total_batches}", flush=True)
 
-            assert len(con_sim_list) == len(
-                embeddings
-            ), f"len con_sim_list, {len(con_sim_list)} not equal to len all_embeddings, {len(embeddings)}"
-
             importance = classifier.importance(embeddings)
 
             print(f"len_con_sim_batch, {len(con_sim_batch)}", flush=True)
             print(f"len_embeddings, {len(embeddings)}", flush=True)
             print(f"len_importance, {len(importance)}", flush=True)
 
-            for (con1, con2), score in zip(con_sim_list, importance):
-                print((f"{con1} &&& {con2} &&& {round(score, 4)}"), flush=True)
-                print(flush=True)
+            assert (
+                len(con_sim_batch) == len(embeddings) == len(importance)
+            ), f"len con_sim_list: {len(con_sim_list)}, len embeddings: {len(embeddings)}, len importance: {len(importance)}, not equal"
+
+            for (con1, con2), score in zip(con_sim_batch, importance):
+                print((f"{con1} &&& {con2} &&& {round(score, 4)}\n"), flush=True)
                 out_file.write(f"{con1}|{con2}|{round(score, 4)}\n")
 
             print(
