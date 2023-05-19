@@ -83,7 +83,7 @@ def read_data(file_path):
 if __name__ == "__main__":
     initialization()
 
-    logging.info("Hello!")
+    logging.info("Running RelBERT Based Importance Classifier...")
 
     # Reading Commandline arguments
     print(f"Input Arguments : {sys.argv}", flush=True)
