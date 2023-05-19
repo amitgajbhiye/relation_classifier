@@ -12,9 +12,9 @@
 #SBATCH -p gpu_v100
 #SBATCH --mem=12G
 
-#SBATCH -t 0-2:00:00
+#SBATCH -t 0-7:00:00
 
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:1
 
 conda activate relbert
 

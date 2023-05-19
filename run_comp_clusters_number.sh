@@ -12,8 +12,8 @@
 #SBATCH -p gpu_v100
 #SBATCH --mem=12G
 
-#SBATCH -t 0-4:00:00
-#SBATCH --gres=gpu:2
+#SBATCH -t 0-8:00:00
+#SBATCH --gres=gpu:1
 
 
 source venv_relbert/bin/activate
