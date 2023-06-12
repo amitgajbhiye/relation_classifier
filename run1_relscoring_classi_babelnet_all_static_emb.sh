@@ -1,6 +1,6 @@
 #!/bin/bash --login
 
-#SBATCH --job-name=FastTRelClass
+#SBATCH --job-name=babNet
 
 #SBATCH --output=logs/bablenet_domain/out_relscoring_classi_babelnet_domain_all_static_emb.txt
 #SBATCH --error=logs/bablenet_domain/err_relscoring_classi_babelnet_domain_all_static_emb.txt
@@ -12,7 +12,7 @@
 #SBATCH -p gpu,gpu_v100
 #SBATCH --mem=20G
 
-#SBATCH -t 0-12:00:00
+#SBATCH -t 0-16:00:00
 
 #SBATCH --gres=gpu:2
 
