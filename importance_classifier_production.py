@@ -9,6 +9,7 @@ import os
 
 import config
 from sklearn.linear_model import LogisticRegression
+from os import listdir
 
 
 def initialization():
@@ -65,6 +66,84 @@ def read_data(file_path):
     return lines
 
 
+if __name__ == "__main__":
+    initialization()
+
+    logging.info("Running RelBERT Based Importance Classifier...")
+
+    # Reading Commandline arguments
+    print(f"Input Arguments : {sys.argv}", flush=True)
+    _, inp_dir = sys.argv
+
+    inp_files = [
+        os.path.join(inp_dir, fname)
+        for fname in listdir(inp_dir)
+        if fname.startswith("for_relbert_scoring")
+    ]
+    out_files = [
+        filename.replace("for_relbert_scoring", "relbert_scored")
+        for filename in inp_files
+    ]
+
+    print(f"inp_files : {inp_files}")
+    print(f"out_files : {out_files}")
+
+    for inp_file, out_file in zip(inp_files, out_files):
+        print(f"Processing", flush=True)
+        print(f"input_fle: {inp_file}", flush=True)
+        print(f"output_file: {out_file}", flush=True)
+
+        # Input Concepts Similar Data
+        con_sim_list = read_data(file_path=inp_file)
+        con_sim_list = [t.split("\t") for t in con_sim_list]
+
+        print(f"record_num_inp_file : {len(con_sim_list)}")
+        print(flush=True)
+
+        classifier = Classifier()
+        classifier.load_model()
+
+        model = RelBERT(
+            "relbert/relbert-roberta-large",
+        )
+
+        batch_size = 10000
+        all_embeddings = []
+        batch_counter = 1
+
+        total_batches = math.ceil(len(con_sim_list) / batch_size)
+
+        with open(out_file, "w") as out_file:
+            for i in range(0, len(con_sim_list), batch_size):
+                con_sim_batch = con_sim_list[i : i + batch_size]
+                embeddings = model.get_embedding(con_sim_batch, batch_size=2048)
+
+                print(
+                    f"processing_batch : {batch_counter} / {total_batches}", flush=True
+                )
+
+                importance = classifier.importance(embeddings)
+
+                print(f"len_con_sim_batch, {len(con_sim_batch)}", flush=True)
+                print(f"len_embeddings, {len(embeddings)}", flush=True)
+                print(f"len_importance, {len(importance)}", flush=True)
+
+                assert (
+                    len(con_sim_batch) == len(embeddings) == len(importance)
+                ), f"len con_sim_list: {len(con_sim_list)}, len embeddings: {len(embeddings)}, len importance: {len(importance)}, not equal"
+
+                for (con1, con2), score in zip(con_sim_batch, importance):
+                    print((f"{con1} &&& {con2} &&& {round(score, 4)}\n"), flush=True)
+                    out_file.write(f"{con1}\t{con2}\t{round(score, 4)}\n")
+
+                print(
+                    f"finished_processing_batch : {batch_counter}\n",
+                    flush=True,
+                )
+                batch_counter += 1
+
+
+# ++++++++++++++++++++++++++++++
 # Word2vec
 # file = "datasets/rel_inp_word2vec_ueft_label_similar_0.5thresh_count_10thresh.txt"
 # out_file = "output_files/w2v_relation_probs.txt"
@@ -80,86 +159,62 @@ def read_data(file_path):
 # out_file = "output_files/fasttext_relation_probs.txt"
 
 
-if __name__ == "__main__":
-    initialization()
+# if __name__ == "__main__":
+#     initialization()
 
-    logging.info("Running RelBERT Based Importance Classifier...")
+#     logging.info("Running RelBERT Based Importance Classifier...")
 
-    # Reading Commandline arguments
-    print(f"Input Arguments : {sys.argv}", flush=True)
-    _, inp_file, out_file = sys.argv
+#     # Reading Commandline arguments
+#     print(f"Input Arguments : {sys.argv}", flush=True)
+#     _, inp_file, out_file = sys.argv
 
-    print(flush=True)
-    print(f"input_fle: {inp_file}", flush=True)
-    print(f"output_file: {out_file}", flush=True)
+#     print(flush=True)
+#     print(f"input_fle: {inp_file}", flush=True)
+#     print(f"output_file: {out_file}", flush=True)
 
-    # Input Concepts Similar Data
-    con_sim_list = read_data(file_path=inp_file)
-    con_sim_list = [t.split("\t") for t in con_sim_list]
+#     # Input Concepts Similar Data
+#     con_sim_list = read_data(file_path=inp_file)
+#     con_sim_list = [t.split("\t") for t in con_sim_list]
 
-    print(f"record_num_inp_file : {len(con_sim_list)}")
-    print(flush=True)
+#     print(f"record_num_inp_file : {len(con_sim_list)}")
+#     print(flush=True)
 
-    classifier = Classifier()
-    classifier.load_model()
+#     classifier = Classifier()
+#     classifier.load_model()
 
-    model = RelBERT(
-        "relbert/relbert-roberta-large",
-    )
+#     model = RelBERT(
+#         "relbert/relbert-roberta-large",
+#     )
 
-    batch_size = 10000
-    all_embeddings = []
-    batch_counter = 1
+#     batch_size = 10000
+#     all_embeddings = []
+#     batch_counter = 1
 
-    total_batches = math.ceil(len(con_sim_list) / batch_size)
+#     total_batches = math.ceil(len(con_sim_list) / batch_size)
 
-    with open(out_file, "w") as out_file:
-        for i in range(0, len(con_sim_list), batch_size):
-            con_sim_batch = con_sim_list[i : i + batch_size]
-            embeddings = model.get_embedding(con_sim_batch, batch_size=2048)
+#     with open(out_file, "w") as out_file:
+#         for i in range(0, len(con_sim_list), batch_size):
+#             con_sim_batch = con_sim_list[i : i + batch_size]
+#             embeddings = model.get_embedding(con_sim_batch, batch_size=2048)
 
-            print(f"processing_batch : {batch_counter} / {total_batches}", flush=True)
+#             print(f"processing_batch : {batch_counter} / {total_batches}", flush=True)
 
-            importance = classifier.importance(embeddings)
+#             importance = classifier.importance(embeddings)
 
-            print(f"len_con_sim_batch, {len(con_sim_batch)}", flush=True)
-            print(f"len_embeddings, {len(embeddings)}", flush=True)
-            print(f"len_importance, {len(importance)}", flush=True)
+#             print(f"len_con_sim_batch, {len(con_sim_batch)}", flush=True)
+#             print(f"len_embeddings, {len(embeddings)}", flush=True)
+#             print(f"len_importance, {len(importance)}", flush=True)
 
-            assert (
-                len(con_sim_batch) == len(embeddings) == len(importance)
-            ), f"len con_sim_list: {len(con_sim_list)}, len embeddings: {len(embeddings)}, len importance: {len(importance)}, not equal"
+#             assert (
+#                 len(con_sim_batch) == len(embeddings) == len(importance)
+#             ), f"len con_sim_list: {len(con_sim_list)}, len embeddings: {len(embeddings)}, len importance: {len(importance)}, not equal"
 
-            for (con1, con2), score in zip(con_sim_batch, importance):
-                print((f"{con1} &&& {con2} &&& {round(score, 4)}\n"), flush=True)
-                out_file.write(f"{con1}|{con2}|{round(score, 4)}\n")
+#             for (con1, con2), score in zip(con_sim_batch, importance):
+#                 print((f"{con1} &&& {con2} &&& {round(score, 4)}\n"), flush=True)
+#                 out_file.write(f"{con1}|{con2}|{round(score, 4)}\n")
 
-            print(
-                f"finished_processing_batch : {batch_counter}\n",
-                flush=True,
-            )
-            batch_counter += 1
-
-    # batch_size = 10000
-    # all_embeddings = []
-    # for i in range(0, len(con_sim_list), batch_size):
-    #     con_sim_batch = con_sim_list[i : i + batch_size]
-    #     embeddings = model.get_embedding(con_sim_batch, batch_size=2048)
-    #     all_embeddings.extend(embeddings)
-
-    # print(f"Finished getting RelBERT Embeddings : {len(all_embeddings)}", flush=True)
-
-    # print(f"len_con_sim_list, {len(con_sim_list)}", flush=True)
-    # print(f"len_all_embeddings, {len(all_embeddings)}", flush=True)
-
-    # assert len(con_sim_list) == len(
-    #     all_embeddings
-    # ), f"len con_sim_list, {len(con_sim_list)} not equal to len all_embeddings, {len(all_embeddings)}"
-
-    # importance = classifier.importance(all_embeddings)
-
-    # with open(out_file, "w") as out_file:
-    #     for (con1, con2), score in zip(con_sim_list, importance):
-    #         print((f"{con1} &&& {con2} &&& {round(score, 4)}"), flush=True)
-    #         print(flush=True)
-    #         out_file.write(f"{con1}|{con2}|{round(score, 4)}\n")
+#             print(
+#                 f"finished_processing_batch : {batch_counter}\n",
+#                 flush=True,
+#             )
+#             batch_counter += 1
