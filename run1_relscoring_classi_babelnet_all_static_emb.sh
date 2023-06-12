@@ -3,7 +3,7 @@
 #SBATCH --job-name=FastTRelClass
 
 #SBATCH --output=logs/bablenet_domain/out_relscoring_classi_babelnet_domain_all_static_emb.txt
-#SBATCH --error=logs/bablenet_domain/out_relscoring_classi_babelnet_domain_all_static_emb.txt
+#SBATCH --error=logs/bablenet_domain/err_relscoring_classi_babelnet_domain_all_static_emb.txt
 
 #SBATCH --tasks-per-node=5
 #SBATCH --ntasks=5
